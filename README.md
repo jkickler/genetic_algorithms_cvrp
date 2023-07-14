@@ -1,17 +1,6 @@
-# CI40 Project
+# Vehicle Routing Problem
 
-Welcome! This is a repository for CI4O project ! 
-
-| Student Number | Student Names |
-|---|---|
-| 20220593 | Joice Preuss | 
-| 20220594 | Jaime Kuei | 
-| 20220595 | Maxwell Marcos | 
-| 20220630 | Jannik Kickler | 
-| 20221036 | Bianca Victor |
-
-## Contents
-This repository is organanized as follows:
+Welcome! This is a repository for solving the Vehicle Routing Problem (VRP) with Genetic Algorithms.
 
 ## How to configure the local environment for the project
 
@@ -24,16 +13,14 @@ pip install -r requirements.txt
 
 ## What is the optimization problem? 
 
-The project is focused to solve the vehicle routing problem. 
+The repository is focused to solve the VRP and the VRP with capacity constraint (CVRP).
 
 It's possible to see the references in this reference from google:
 [Vehicle Routing Problem](https://developers.google.com/optimization/routing/vrp)
 
 ## Modelling the Problem 
 
-## Vehicle Routing Problem
-
-### Representation and Fitness function
+### Vehicle Routing Problem
 
 As representation of the problem, each individual is created as a list of lists, in which each list represents a vehicle and the elements represent the cities to be visited by that vehicle. The first element of each vehicle list is the initial city.
 
@@ -45,20 +32,12 @@ Example: [[2,3],[2],[2,1,4]]
 
                                     vehicle 3 start in city 2 and goes to city 1 and 4
                                     
-The TSP fitness function from class is used and modified as the fitness function, returning the total fitness of each individual by summing the single vehicle fitnesses. 
-As previously mentioned, now a more detailed explanation of the functions flatten() and unflatten() is provided due to their significance. The function flatten() has two outputs, namely the flat_representation and the flat_structure. The flat_representation is a list that contains all the cities visited by all cars. The order of the cities in the list corresponds to the order in which the cars visited them. For instance, the first element of the list represents the first city visited by the first vehicle, the second element the second city visited by the first vehicle, followed by subsequent cities visited by other vehicles. On the other hand, the flat_structure is a list, where the first element represents the initial city in the representation, while the second element is a sublist that indicates the number of cities a particular vehicle is traveling. For example, in the provided example, vehicle 1 visits cities 2 and 3, resulting in a total of 2 cities that need to be passed.
 
-Example: 
+### Capacity Constraint Vehicle Routing Problem
 
-flatten([[2,3],[2],[2,1,4]]) → flat_representation [3,1,4]; flat_structure [[2, [2,1,3]]
+In order to consider the capacity constraint, the representation of each individual is modified. Instead of a single value for each city, a tuple format (city, demand) is used, where demand represents the amount of capacity consumed by the vehicle. The initial city in this problem has a demand of 0. 
 
-The reason for introducing the flatten() function is that performing mutation and applying crossover operations becomes easier with the flattened form of the representation. Additionally, we employ the mutate_structure() function on the flat_structure to introduce greater variation among the newly created individuals. Finally, unflatten() reconstructs the modified representation by combining the altered flat_representation with the mutated structure.
-
-## Capacity Constraint Vehicle Routing Problem
-
-### Representation and Fitness function
-
-In order to consider the capacity constraint, the representation of each individual is modified. Instead of a single value for each city, a tuple format (city, demand) is used, where demand represents the amount of capacity consumed by the vehicle. The initial city in this problem has a demand of 0. Each vehicle is assigned a predefined capacity restriction which should not be surpassed. However, if a vehicle exceeds its capacity through random selection, a penalty of 100,000 is added to the fitness of the individual. This penalty ensures that the individual will not survive during the generation of offspring. Otherwise the calculation of total distance is similar to VRP.
+Each vehicle is assigned a predefined capacity restriction which should not be surpassed. However, if a vehicle exceeds its capacity through random selection, a penalty of 100,000 is added to the fitness of the individual. This penalty ensures that the individual will not survive during the generation of offspring. Otherwise the calculation of total distance is similar to VRP.
 
 Example: [[(2,0),(3,1)],[(2,0)],[(2,0),(1,2),(4,3)]], 
 
@@ -68,9 +47,7 @@ Example: [[(2,0),(3,1)],[(2,0)],[(2,0),(1,2),(4,3)]],
 
                                 vehicle 3 start in city 2 with 0 load, goes to city 1 with 2 load  and 4 with 3 load
 
-For the CVRP representation the functions flatten() and unflatten() work the same as described in the chapter VRP.
-
-## How to test it? 
+### How to test it? 
 
 In order to evaluate differents configurations for the differents problems, it's possible to run the following commands:
 
@@ -81,7 +58,7 @@ python cvrp.py
 
 To set up a custom experiment for each problem it's possible to change the file `experiments_configuration.yaml` that receives all the parameters for each experiment to be runned in vrp.py file or cvrp.py.
 
-In our library we have the options: 
+In this library you have following options: 
 
 For crossover:
 - cycle_xo
@@ -96,8 +73,7 @@ For mutation structure:
 
 ## Experiments
 
-In the experiments folder, it's possible to see the experiments that we did for the project. Each experiment is represented in a folder with the name of the experiment, and the results as a csv file and the 
-plot of the statistical results as a png file.
+In the experiments folder, it's possible to see the experiments that we did for the project. Each experiment is represented in a folder with the name of the experiment, and the results as a csv file and the plot of the statistical results as a png file.
 
 ### Statistical evaluation
 
